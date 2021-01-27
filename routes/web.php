@@ -38,6 +38,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         });
         Route::get('/home', 'HomeController@index')->name('home');
         Route::resource('mahasiswa', 'MahasiswaController');
+
+        // Data Master
+        Route::resource('jurusan', 'JurusanController')->except(['show']);
+        Route::resource('pekerjaan', 'PekerjaanController')->except(['show']);
+        Route::resource('asal_pemasaran', 'AsalPemasaranController')->except(['show']);
     });
 });
 
@@ -48,16 +53,16 @@ Route::get('clear-cache', function() {
 
 Route::get('clear-route', function() {
     $exit = Artisan::call('route:clear');
-    return back();
+    return back()->with('alert', ['color' => 'primary', 'content' => 'Clear cache successful']);
 });
 
 Route::get('clear-config', function() {
     $exit = Artisan::call('config:cache');
     $exit = Artisan::call('cache:clear');
-    return back();
+    return back()->with('alert', ['color' => 'primary', 'content' => 'Clear cache successful']);
 });
 
 Route::get('clear-view', function() {
     $exit = Artisan::call('view:clear');
-    return back();
+    return back()->with('alert', ['color' => 'primary', 'content' => 'Clear cache successful']);
 });

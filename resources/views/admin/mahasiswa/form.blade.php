@@ -10,7 +10,9 @@
 @section('content')
     <div class="container-fluid">
         <div class="fade-in">
-            <h3 class="mb-4"><strong><i class="cil-people"></i>&nbsp;Mahasiswa</strong>&nbsp;<small>Form {{ isset($mahasiswa) ? 'Edit' : 'Tambah' }}</small></h3>
+            <h3 class="mb-4"><strong><i class="cil-people">
+                </i>&nbsp;Mahasiswa</strong>&nbsp;<small>Form {{ isset($mahasiswa) ? 'Edit' : 'Tambah' }}</small>
+            </h3>
             <form class="form-horizontal" action="{{ isset($mahasiswa) ? route('admin.mahasiswa.update', $mahasiswa->id) : route('admin.mahasiswa.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @isset($mahasiswa) @method('PUT') @endif

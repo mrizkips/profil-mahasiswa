@@ -9,7 +9,9 @@
 @section('content')
     <div class="container-fluid">
         <div class="fade-in">
-            <h3 class="mb-4"><strong><i class="cil-people"></i>&nbsp;Mahasiswa</strong></h3>
+            <h3 class="mb-4"><strong><i class="cil-people">
+                </i>&nbsp;Mahasiswa</strong>
+            </h3>
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="card">
