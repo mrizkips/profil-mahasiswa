@@ -16,7 +16,7 @@ class AsalPemasaranController extends Controller
      */
     public function index()
     {
-        $asal_pemasaran = AsalPemasaran::latest()->paginate();
+        $asal_pemasaran = AsalPemasaran::orderBy('id', 'desc')->paginate()->onEachSide(2);
         return view('admin.asal_pemasaran.index', [
             'asal_pemasaran' => $asal_pemasaran,
         ]);

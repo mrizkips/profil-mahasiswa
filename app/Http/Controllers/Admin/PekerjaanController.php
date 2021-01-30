@@ -16,7 +16,7 @@ class PekerjaanController extends Controller
      */
     public function index()
     {
-        $pekerjaan = Pekerjaan::latest()->paginate();
+        $pekerjaan = Pekerjaan::orderBy('id', 'desc')->paginate()->onEachSide(2);
         return view('admin.pekerjaan.index', [
             'pekerjaan' => $pekerjaan,
         ]);

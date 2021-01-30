@@ -13,11 +13,11 @@ class KabKota extends Model
      * @var bool
      */
     public $incrementing = false;
-    
+
     /**
      * The table associated with the model.
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $table = 'kabkota';
 

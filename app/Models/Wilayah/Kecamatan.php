@@ -15,8 +15,8 @@ class Kecamatan extends Model
     public $incrementing = false;
     /**
      * The table associated with the model.
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $table = 'kecamatan';
 
@@ -26,6 +26,11 @@ class Kecamatan extends Model
      * @var array
      */
     protected $fillable = ['id', 'nama', 'kabkota_id'];
+
+    public function desa()
+    {
+        return $this->hasMany(Desa::class);
+    }
 
     public function kabkota()
     {

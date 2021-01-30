@@ -16,7 +16,7 @@ class JurusanController extends Controller
      */
     public function index()
     {
-        $jurusan = Jurusan::latest()->paginate();
+        $jurusan = Jurusan::orderBy('id', 'desc')->paginate()->onEachSide(3);
         return view('admin.jurusan.index', [
             'jurusan' => $jurusan,
         ]);

@@ -1,4 +1,5 @@
 {
+    "/js/app.js": "/js/app.js",
     "/css/styles.css": "/css/styles.css",
     "/js/jquery.min.js": "/js/jquery.min.js",
     "/js/coreui.bundle.min.js": "/js/coreui.bundle.min.js",
@@ -6,5 +7,6 @@
     "/js/jquery.dataTables.min.js": "/js/jquery.dataTables.min.js",
     "/js/dataTables.bootstrap4.min.js": "/js/dataTables.bootstrap4.min.js",
     "/js/dataTables.indonesian.json": "/js/dataTables.indonesian.json",
+    "/js/i18n/id.js": "/js/i18n/id.js",
     "/css/all.min.css": "/css/all.min.css"
 }

@@ -34,7 +34,7 @@
                                 <tbody>
                                     @foreach ($asal_pemasaran as $key => $data)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $asal_pemasaran->firstItem() + $key }}</td>
                                             <td>{{ $data->nama }}</td>
                                             <td>
                                                 @include('components.edit', ['url' => route('admin.asal_pemasaran.edit', $data->id)])
@@ -45,8 +45,10 @@
                                 </tbody>
                             </table>
                             <nav aria-label="Page navigation">
-                                {{ $asal_pemasaran->links('components.pagination') }}
+                                {{ $asal_pemasaran->links() }}
                             </nav>
+                            @else
+                            <strong>Data tidak ditemukan!</strong>
                             @endisset
                         </div>
                     </div>

@@ -15,8 +15,8 @@ class Provinsi extends Model
     public $incrementing = false;
     /**
      * The table associated with the model.
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $table = 'provinsi';
 

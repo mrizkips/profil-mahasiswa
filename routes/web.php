@@ -40,6 +40,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::resource('mahasiswa', 'MahasiswaController');
 
         // Data Master
+        Route::resource('provinsi', 'ProvinsiController')->except(['show']);
+        Route::resource('kabkota', 'KabKotaController')->except(['show']);
+        Route::resource('kecamatan', 'KecamatanController')->except(['show']);
+        Route::resource('desa', 'DesaController')->except(['show']);
         Route::resource('jurusan', 'JurusanController')->except(['show']);
         Route::resource('pekerjaan', 'PekerjaanController')->except(['show']);
         Route::resource('asal_pemasaran', 'AsalPemasaranController')->except(['show']);
@@ -49,20 +53,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 Route::get('clear-cache', function() {
     $exit = Artisan::call('cache:clear');
     return back()->with('alert', ['color' => 'primary', 'content' => 'Clear cache successful']);
-});
+})->name('clear.cache');
 
 Route::get('clear-route', function() {
     $exit = Artisan::call('route:clear');
     return back()->with('alert', ['color' => 'primary', 'content' => 'Clear cache successful']);
-});
+})->name('clear.route');
 
 Route::get('clear-config', function() {
     $exit = Artisan::call('config:cache');
     $exit = Artisan::call('cache:clear');
     return back()->with('alert', ['color' => 'primary', 'content' => 'Clear cache successful']);
-});
+})->name('clear.config');
 
 Route::get('clear-view', function() {
     $exit = Artisan::call('view:clear');
     return back()->with('alert', ['color' => 'primary', 'content' => 'Clear cache successful']);
-});
+})->name('clear.view');

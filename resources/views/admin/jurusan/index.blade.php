@@ -34,7 +34,7 @@
                                 <tbody>
                                     @foreach ($jurusan as $key => $data)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $jurusan->firstItem() + $key }}</td>
                                             <td>{{ $data->nama }}</td>
                                             <td>
                                                 @include('components.edit', ['url' => route('admin.jurusan.edit', $data->id)])
@@ -45,8 +45,10 @@
                                 </tbody>
                             </table>
                             <nav aria-label="Page navigation">
-                                {{ $jurusan->links('components.pagination') }}
+                                {{ $jurusan->links() }}
                             </nav>
+                            @else
+                            <strong>Data tidak ditemukan!</strong>
                             @endisset
                         </div>
                     </div>

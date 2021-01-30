@@ -1,0 +1,64 @@
+@extends('layouts.base')
+
+@section('title', 'Daftar Provinsi - '.config('app.name'))
+
+@section('breadcrumbs')
+    <li class="breadcrumb-item">Wilayah</li>
+    <li class="breadcrumb-item active">Provinsi</li>
+@endsection
+
+@section('content')
+    <div class="container-fluid">
+        <div class="fade-in">
+            <h3 class="mb-4"><strong><i class="cil-map">
+                </i>&nbsp;Provinsi</strong>
+            </h3>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Daftar Provinsi</strong>
+                            <a href="{{ route('admin.provinsi.create') }}" class="btn btn-primary float-right">
+                                <i class="cil-plus"></i> Tambah Provinsi
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover" width="100%" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <td width="30px">#</td>
+                                        <td>Nama Provinsi</td>
+                                        <td>Aksi</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('javascript')
+<script>
+    $(document).ready(function() {
+        var table = $('#dataTable').DataTable({
+            language: {
+                url: '{{ asset('js/dataTables.indonesian.json') }}'
+            },
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('admin.provinsi.index') }}",
+            columns: [
+                {data: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'nama', name: 'nama'},
+                {data: 'action', name: 'action', 'searchable': false, orderable: false}
+            ]
+        });
+    });
+</script>
+@endsection

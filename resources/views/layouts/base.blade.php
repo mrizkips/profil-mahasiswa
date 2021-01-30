@@ -47,9 +47,7 @@
             <img class="c-sidebar-brand-full" src="{{ asset('assets/img/stmik-logo.png') }}" height="46">
             <img class="c-sidebar-brand-minimized" src="{{ asset('assets/img/stmik-logo.png') }}" height="24">
         </div>
-        @auth('admin')
-            @include('layouts.sidebar-admin')
-        @endauth
+        @include('layouts.sidebar')
         <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
     </div>
 
@@ -65,10 +63,11 @@
         </div>
     </div>
     <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/i18n/id.js') }}"></script>
     @yield('javascript')
 </body>
 </html>
