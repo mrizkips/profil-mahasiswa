@@ -63,6 +63,7 @@ class CreateProfilAdminTable extends Migration
             $table->char('no_hp', 20)->nullable();
             $table->char('kontak_lain', 20)->nullable();
 
+            $table->string('pas_foto', 100)->nullable();
             $table->timestamps();
         });
     }

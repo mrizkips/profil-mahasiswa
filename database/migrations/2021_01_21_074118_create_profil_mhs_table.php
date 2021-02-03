@@ -46,11 +46,10 @@ class CreateProfilMhsTable extends Migration
             // Status dan Pilihan
             $table->string('asal_sekolah', 50)->nullable();
             $table->string('jurusan_asal', 50)->nullable();
-            $table->enum('status_mhs', ['1', '2'])->nullable()->comment('1 => Baru, 2 => Pindahan');
+            $table->enum('status_mhs', ['Baru', 'Pindahan'])->nullable();
             $table->unsignedSmallInteger('jurusan_id')->nullable();
             $table->string('no_test', 8)->nullable();
             $table->string('thn_masuk', 4)->nullable();
-            $table->string('semester', 1)->nullable();
             $table->unsignedSmallInteger('asal_pemasaran_id')->nullable();
 
             $table->foreign('jurusan_id')

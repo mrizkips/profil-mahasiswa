@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Wilayah;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DesaRequest;
+use App\Http\Select2\Select2;
 use App\Models\Wilayah\Desa;
-use App\Models\Wilayah\Kecamatan;
 use Yajra\DataTables\Facades\DataTables;
 
 class DesaController extends Controller
@@ -20,20 +20,22 @@ class DesaController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            if ($nama_kecamatan = $request->get('kecamatan')) {
-                $kecamatan = Kecamatan::where('nama', 'like', "%$nama_kecamatan%")->limit(5)->get();
+            if ($nama_desa = $request->get('desa')) {
+                $desa = Desa::where('nama', 'like', "%$nama_desa%")->limit(5)->get();
 
-                $items = array();
-                foreach ($kecamatan as $kec) {
-                    array_push($items, [
-                        'id' => $kec->id,
-                        'text' => $kec->nama,
-                    ]);
+                if ($kecamatan_id = $request->get('kecamatan_id')) {
+                    $desa = Desa::where([
+                        ['nama', 'like', "%$nama_desa%"],
+                        ['kecamatan_id', '=', $kecamatan_id],
+                    ])->limit(5)->get();
                 }
 
-                return response()->json([
-                    'items' => $items,
-                ]);
+                $select = new Select2();
+                foreach ($desa as $des) {
+                    $select->option($des->id, $des->nama);
+                }
+
+                return $select->render();
             }
 
             $desa = Desa::query()->with(['kecamatan']);

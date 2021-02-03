@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Mahasiswa;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -37,7 +38,17 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest:mahasiswa');
+    }
+
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
+    {
+        return view('auth.register');
     }
 
     /**
@@ -49,24 +60,37 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'username' => ['required', 'string', 'exists:mahasiswa,username'],
         ]);
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Handle a registration request for the application.
      *
-     * @param  array  $data
-     * @return \App\User
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    protected function create(array $data)
+    public function register(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        $this->validator($request->all())->validate();
+        if ($mahasiswa = Mahasiswa::where('username', $request->input('username'))->first()) {
+            if ($mahasiswa->is_register == 1) {
+                return redirect()->back()->with('alert', [
+                    'color' => 'danger',
+                    'content' => trans('auth.registered'),
+                ]);
+            }
+
+            $mahasiswa->update(['is_register' => config('constants.is_register.true')]);
+            return redirect()->route('login')->with('alert', [
+                'color' => 'success',
+                'content' => trans('auth.register_success'),
+            ]);
+        }
+
+        return redirect()->back()->with('alert', [
+            'color' => 'danger',
+            'content' => trans('auth.failed'),
         ]);
     }
 }

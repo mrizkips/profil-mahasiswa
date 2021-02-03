@@ -33,4 +33,9 @@ class Mahasiswa extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function profil_mhs()
+    {
+        return $this->hasOne(ProfilMhs::class);
+    }
 }

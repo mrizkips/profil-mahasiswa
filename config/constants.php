@@ -13,19 +13,19 @@ return [
             'model' => App\Models\Mahasiswa::class,
         ],
     ],
-    'register' => [
+    'is_register' => [
         'true' => '1',
         'false' => '0',
     ],
     'forms' => [
         'jen_kel' => [
-            'lakilaki' => 'l',
-            'perempuan' => 'p',
+            'l' => 'Laki-laki',
+            'p' => 'Perempuan',
         ],
         'mahasiswa' => [
             'status_mhs' => [
-                'baru' => 1,
-                'pindahan' => 2,
+                'baru' => 'Baru',
+                'pindahan' => 'Pindahan',
             ]
         ]
     ]

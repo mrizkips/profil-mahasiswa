@@ -38,15 +38,15 @@
                                 <div class="form-group row">
                                     <label for="kecamatan_id" class="col-md-3 col-form-label">Kecamatan</label>
                                     <div class="col-md">
-                                        <select name="kecamatan_id" id="kecamatan_id" class="form-control select2">
+                                        <select name="kecamatan_id" id="kecamatan_id" class="form-control select2 @error('kecamatan_id') is-invalid @enderror">
                                             <option {{ isset($desa) ? "value=".$desa->kecamatan->id : "" }}>
                                                 {{ isset($desa) ? $desa->kecamatan->nama : trans('desa.placeholders.kecamatan_id') }}
                                             </option>
                                         </select>
                                         @error('kecamatan_id')
-                                            <span class="invalid-feedback" role="alert">
+                                            <div class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
-                                            </span>
+                                            </div>
                                         @enderror
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
             minimumInputLength: 2,
             ajax: {
                 delay: 500,
-                url: "{{ route('admin.desa.index') }}",
+                url: "{{ route('admin.kecamatan.index') }}",
                 data: function (params) {
                     var query = {
                         kecamatan: $.trim(params.term) || "",

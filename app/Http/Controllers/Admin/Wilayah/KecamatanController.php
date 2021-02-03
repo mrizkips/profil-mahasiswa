@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Wilayah;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\KecamatanRequest;
-use App\Models\Wilayah\KabKota;
+use App\Http\Select2\Select2;
 use App\Models\Wilayah\Kecamatan;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -20,20 +20,22 @@ class KecamatanController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            if ($nama_kabkota = $request->get('kabkota')) {
-                $kabkota = KabKota::where('nama', 'like', "%$nama_kabkota%")->limit(5)->get();
+            if ($nama_kecamatan = $request->get('kecamatan')) {
+                $kecamatan = Kecamatan::where('nama', 'like', "%$nama_kecamatan%")->limit(5)->get();
 
-                $items = array();
-                foreach ($kabkota as $kabkot) {
-                    array_push($items, [
-                        'id' => $kabkot->id,
-                        'text' => $kabkot->nama,
-                    ]);
+                if ($kabkota_id = $request->get('kabkota_id')) {
+                    $kecamatan = Kecamatan::where([
+                        ['nama', 'like', "%$nama_kecamatan%"],
+                        ['kabkota_id', '=', $kabkota_id],
+                    ])->limit(5)->get();
                 }
 
-                return response()->json([
-                    'items' => $items,
-                ]);
+                $select = new Select2();
+                foreach ($kecamatan as $kec) {
+                    $select->option($kec->id, $kec->nama);
+                }
+
+                return $select->render();
             }
 
             $kecamatan = Kecamatan::query()->with(['kabkota']);

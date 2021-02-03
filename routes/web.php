@@ -21,7 +21,9 @@ Auth::routes([
     'password.reset' => false,
 ]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware('auth:mahasiswa')->group(function() {
+    Route::get('/home', 'HomeController@index')->name('home');
+});
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], function () {
 
@@ -38,13 +40,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         });
         Route::get('/home', 'HomeController@index')->name('home');
         Route::resource('mahasiswa', 'MahasiswaController');
+        Route::resource('jurusan', 'JurusanController')->except(['show']);
+        Route::resource('tahun_akademik', 'TahunAkademikController')->except(['show']);
+        Route::resource('ekstrakurikuler', 'EkstrakurikulerController')->except(['show']);
 
         // Data Master
-        Route::resource('provinsi', 'ProvinsiController')->except(['show']);
-        Route::resource('kabkota', 'KabKotaController')->except(['show']);
-        Route::resource('kecamatan', 'KecamatanController')->except(['show']);
-        Route::resource('desa', 'DesaController')->except(['show']);
-        Route::resource('jurusan', 'JurusanController')->except(['show']);
+        Route::namespace('Wilayah')->group(function() {
+            Route::resource('provinsi', 'ProvinsiController')->except(['show']);
+            Route::resource('kabkota', 'KabKotaController')->except(['show']);
+            Route::resource('kecamatan', 'KecamatanController')->except(['show']);
+            Route::resource('desa', 'DesaController')->except(['show']);
+        });
+
         Route::resource('pekerjaan', 'PekerjaanController')->except(['show']);
         Route::resource('asal_pemasaran', 'AsalPemasaranController')->except(['show']);
     });

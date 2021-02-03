@@ -30,7 +30,8 @@
                                         <td>Nama</td>
                                         <td>Jurusan</td>
                                         <td>Tahun Masuk</td>
-                                        <td class="action">Aksi</td>
+                                        <td>Tanggal Dibuat</td>
+                                        <td class="text-center">Aksi</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -49,17 +50,22 @@
 <script>
     $(document).ready(function() {
         var table = $('#dataTable').DataTable({
-            'language': {
+            language: {
                 url: '{{ asset('js/dataTables.indonesian.json') }}'
             },
-            'columns': [
-                { 'searchable': false },
-                null,
-                null,
-                null,
-                null,
-                { 'searchable': false, orderable: false }
-            ]
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('admin.mahasiswa.index') }}",
+            columns: [
+                {data: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'username', name: 'username'},
+                {data: 'profil_mhs.nama', name: 'profil_mhs.nama'},
+                {data: 'profil_mhs.jurusan.nama', name: 'profil_mhs.jurusan.nama'},
+                {data: 'profil_mhs.thn_masuk', name: 'profil_mhs.thn_masuk'},
+                {data: 'created_at', name: 'created_at'},
+                {data: 'action', name: 'action', 'searchable': false, orderable: false}
+            ],
+            order: ['5', 'desc']
         });
     });
 </script>

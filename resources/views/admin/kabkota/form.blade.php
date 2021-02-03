@@ -38,7 +38,7 @@
                                 <div class="form-group row">
                                     <label for="provinsi_id" class="col-md-3 col-form-label">Provinsi</label>
                                     <div class="col-md">
-                                        <select name="provinsi_id" id="provinsi_id" class="form-control select2">
+                                        <select name="provinsi_id" id="provinsi_id" class="form-control select2 @error('provinsi_id') is-invalid @enderror">
                                             <option {{ isset($kabkota) ? "value=".$kabkota->provinsi->id : "" }}>
                                                 {{ isset($kabkota) ? $kabkota->provinsi->nama : trans('kabkota.placeholders.provinsi_id') }}
                                             </option>
@@ -72,7 +72,7 @@
             minimumInputLength: 2,
             ajax: {
                 delay: 500,
-                url: "{{ route('admin.kabkota.index') }}",
+                url: "{{ route('admin.provinsi.index') }}",
                 data: function (params) {
                     var query = {
                         provinsi: $.trim(params.term) || "",

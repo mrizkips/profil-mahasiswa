@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\TahunAkademik;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,8 +19,10 @@ class DatabaseSeeder extends Seeder
         $this->call(DaerahSeeder::class);
 
         // Data Master
-        $this->call(PekerjaanSeeder::class);
         $this->call(JurusanSeeder::class);
+        $this->call(TahunAkademikSeeder::class);
+        $this->call(EkstrakurikulerSeeder::class);
+        $this->call(PekerjaanSeeder::class);
         $this->call(AsalPemasaranSeeder::class);
 
         // User

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Wilayah;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\KabKotaRequest;
-use App\Models\Wilayah\KabKota;
+use App\Http\Requests\ProvinsiRequest;
+use App\Http\Select2\Select2;
 use App\Models\Wilayah\Provinsi;
 use Yajra\DataTables\Facades\DataTables;
 
-class KabKotaController extends Controller
+class ProvinsiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,32 +23,27 @@ class KabKotaController extends Controller
             if ($nama_provinsi = $request->get('provinsi')) {
                 $provinsi = Provinsi::where('nama', 'like', "%$nama_provinsi%")->limit(5)->get();
 
-                $items = array();
+                $select = new Select2();
                 foreach ($provinsi as $prov) {
-                    array_push($items, [
-                        'id' => $prov->id,
-                        'text' => $prov->nama,
-                    ]);
+                    $select->option($prov->id, $prov->nama);
                 }
 
-                return response()->json([
-                    'items' => $items,
-                ]);
+                return $select->render();
             }
 
-            $kabkota = KabKota::query()->with(['provinsi']);
-            return DataTables::eloquent($kabkota)
+            $provinsi = Provinsi::query();
+            return DataTables::eloquent($provinsi)
                 ->addIndexColumn()
                 ->addColumn('action', function($row) {
-                    $edit = view('components.edit', ['url' => route('admin.kabkota.edit', $row->id)]);
-                    $delete = view('components.delete', ['url' => route('admin.kabkota.destroy', $row->id)]);
+                    $edit = view('components.edit', ['url' => route('admin.provinsi.edit', $row->id)]);
+                    $delete = view('components.delete', ['url' => route('admin.provinsi.destroy', $row->id)]);
                     return $edit.$delete;
                 })
                 ->rawColumns(['action'])
                 ->make();
         }
 
-        return view('admin.kabkota.index');
+        return view('admin.provinsi.index');
     }
 
     /**
@@ -58,73 +53,70 @@ class KabKotaController extends Controller
      */
     public function create()
     {
-        $provinsi = Provinsi::all(['id','nama']);
-        return view('admin.kabkota.form', ['provinsi' => $provinsi]);
+        return view('admin.provinsi.form');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\KabKotaRequest  $request
+     * @param  \App\Http\Requests\ProvinsiRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(KabKotaRequest $request)
+    public function store(ProvinsiRequest $request)
     {
         $fields = $request->getFields();
 
-        if (KabKota::create($fields)) {
-            return redirect()->route('admin.kabkota.index')->with('alert', [
+        if (Provinsi::create($fields)) {
+            return redirect()->route('admin.provinsi.index')->with('alert', [
                 'color' => 'success',
-                'content' => trans('kabkota.messages.success.create'),
+                'content' => trans('provinsi.messages.success.create'),
             ]);
         }
 
         return redirect()->back()->withInput()->with('alert', [
             'color' => 'danger',
-            'content' => trans('kabkota.messages.errors.create'),
+            'content' => trans('provinsi.messages.errors.create'),
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  \App\Models\Wilayah\Provinsi $provinsi
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Provinsi $provinsi)
     {
-        $kabkota = KabKota::find($id);
-        $provinsi = Provinsi::all(['id','nama']);
-        return view('admin.kabkota.form', compact(['kabkota','provinsi']));
+        return view('admin.provinsi.form', compact('provinsi'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\KabKotaRequest  $request
+     * @param  \App\Http\Requests\ProvinsiRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(KabKotaRequest $request, $id)
+    public function update(ProvinsiRequest $request, $id)
     {
-        if (!$kabkota = KabKota::find($id)) {
+        if (!$provinsi = Provinsi::find($id)) {
             return redirect()->back()->with('alert', [
                 'color' => 'danger',
-                'content' => trans('kabkota.messages.errors.not_found'),
+                'content' => trans('provinsi.messages.errors.not_found'),
             ]);
         }
 
         $fields = $request->getFields();
-        if ($kabkota->update($fields)) {
-            return redirect()->route('admin.kabkota.index')->with('alert', [
+        if ($provinsi->update($fields)) {
+            return redirect()->route('admin.provinsi.index')->with('alert', [
                 'color' => 'success',
-                'content' => trans('kabkota.messages.success.update'),
+                'content' => trans('provinsi.messages.success.update'),
             ]);
         }
 
         return redirect()->back()->with('alert', [
             'color' => 'danger',
-            'content' => trans('kabkota.messages.errors.update'),
+            'content' => trans('provinsi.messages.errors.update'),
         ]);
     }
 
@@ -136,23 +128,23 @@ class KabKotaController extends Controller
      */
     public function destroy($id)
     {
-        if (!$kabkota = KabKota::find($id)) {
+        if (!$provinsi = Provinsi::find($id)) {
             return redirect()->back()->with('alert', [
                 'color' => 'danger',
-                'content' => trans('kabkota.messages.errors.not_found'),
+                'content' => trans('provinsi.messages.errors.not_found'),
             ]);
         }
 
-        if($kabkota->delete()) {
+        if($provinsi->delete()) {
             return redirect()->back()->with('alert', [
                 'color' => 'success',
-                'content' => trans('kabkota.messages.success.delete'),
+                'content' => trans('provinsi.messages.success.delete'),
             ]);
         }
 
         return redirect()->back()->with('alert', [
             'color' => 'danger',
-            'content' => trans('kabkota.messages.errors.delete'),
+            'content' => trans('provinsi.messages.errors.delete'),
         ]);
     }
 }
