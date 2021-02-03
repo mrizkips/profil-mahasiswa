@@ -33,7 +33,7 @@
                                                 <i class="cil-user"></i>
                                             </span>
                                         </div>
-                                        <input class="form-control @error($username) is-invalid @enderror" type="text" placeholder="Username" name="{{$username}}" value="{{ old($username) }}" required autofocus>
+                                        <input class="form-control @error($username) is-invalid @enderror" type="text" placeholder="{{ isLoginRoute() ? trans('auth.placeholders.nim') : trans('auth.placeholders.username') }}" name="{{$username}}" value="{{ old($username) }}" required autofocus>
                                         @error($username)
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -48,7 +48,7 @@
                                                 <i class="cil-lock-locked"></i>
                                             </span>
                                         </div>
-                                        <input class="form-control @error('password') is-invalid @enderror" type="password" placeholder="Password" name="password" required>
+                                        <input class="form-control @error('password') is-invalid @enderror" type="password" placeholder="{{ trans('auth.placeholders.password') }}" name="password" required>
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

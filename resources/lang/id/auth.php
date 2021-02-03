@@ -17,4 +17,15 @@ return [
     'not_registered' => 'Identitas tersebut belum diregistrasi',
     'registered' => 'Identitas sudah diregistrasi',
     'register_success' => 'Identitas berhasil diregistrasi',
+
+    'fields' => [
+        'username' => 'NIM',
+        'password' => 'Password',
+    ],
+
+    'placeholders' => [
+        'username' => 'Masukkan username',
+        'nim' => 'Masukkan NIM',
+        'password' => 'Masukkan password',
+    ],
 ];

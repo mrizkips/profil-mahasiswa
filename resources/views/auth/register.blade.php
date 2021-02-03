@@ -24,7 +24,7 @@
                                                 <i class="cil-user"></i>
                                             </span>
                                         </div>
-                                        <input class="form-control @error('username') is-invalid @enderror" type="text" placeholder="Username" name="{{'username'}}" value="{{ old('username') }}" required autofocus>
+                                        <input class="form-control @error('username') is-invalid @enderror" type="text" placeholder="{{ trans('auth.placeholders.nim') }}" name="{{'username'}}" value="{{ old('username') }}" required autofocus>
                                         @error('username')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

@@ -61,6 +61,10 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'username' => ['required', 'string', 'exists:mahasiswa,username'],
+        ], [
+            'username.exists' => 'Isian :attribute tidak ditemukan',
+        ], [
+            'username' => trans('auth.fields.username'),
         ]);
     }
 
