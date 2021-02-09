@@ -12,7 +12,6 @@ use App\Models\Pekerjaan;
 use App\Services\MahasiswaService;
 use App\Traits\Uploadable;
 use Yajra\DataTables\Facades\DataTables;
-
 class MahasiswaController extends Controller
 {
     use Uploadable;

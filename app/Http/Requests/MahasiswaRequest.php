@@ -48,7 +48,7 @@ class MahasiswaRequest extends FormRequest
             'telp' => 'nullable|alpha_num',
             'no_hp' => 'required|alpha_num',
             'kontak_lain' => 'nullable|alpha_num',
-            'email' => 'nullable|email',
+            'email' => 'required|email',
             'website' => 'nullable',
             'asal_pemasaran_id' => 'required|exists:asal_pemasaran,id',
             'pas_foto' => 'nullable|file|mimes:png,jpg,jpeg|max:2048',

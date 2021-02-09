@@ -67,7 +67,7 @@ return [
         'telp' => 'Masukkan no. telepon (tidak wajib)',
         'no_hp' => 'Masukkan no. HP',
         'kontak_lain' => 'Masukkan kontak lain (tidak wajib)',
-        'email' => 'Masukkan alamat e-mail (tidak wajib)',
+        'email' => 'Masukkan alamat e-mail',
         'website' => 'Masukkan alamat website (tidak wajib)',
         'asal_pemasaran_id' => 'Pilih asal mengenal STMIK Bandung',
         'pas_foto' => 'Unggah pas foto',

@@ -17,4 +17,28 @@ return [
     'sent'     => 'Kami sudah mengirim surel yang berisi tautan untuk mereset kata sandi Anda!',
     'token'    => 'Token pengaturan ulang kata sandi tidak sah.',
     'user'     => 'Kami tidak dapat menemukan pengguna dengan alamat surel tersebut.',
+
+    'fields' => [
+        'old_password' => 'Password Lama',
+        'password' => 'Password',
+    ],
+
+    'placeholders' => [
+        'old_password' => 'Masukkan password lama',
+        'password' => 'Masukkan password baru',
+        'password_confirmation' => 'Masukkan konfirmasi password',
+    ],
+
+    'errors' => [
+        'mismatch' => ':attribute tidak cocok dengan database',
+    ],
+
+    'messages' => [
+        'success' => [
+            'update' => 'Password berhasil diubah',
+        ],
+        'errors' => [
+            'update' => 'Gagal merubah password'
+        ]
+    ]
 ];

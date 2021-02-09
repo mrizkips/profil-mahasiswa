@@ -27,6 +27,9 @@ return [
                 'baru' => 'Baru',
                 'pindahan' => 'Pindahan',
             ]
-        ]
-    ]
+        ],
+        'semester' => [
+            'Genap', 'Ganjil', 'Antara',
+        ],
+    ],
 ];

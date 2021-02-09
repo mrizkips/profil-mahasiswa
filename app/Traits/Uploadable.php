@@ -11,7 +11,7 @@ trait Uploadable
     use Imageable;
 
     /**
-     * Undocumented function
+     * Store file in storage.
      *
      * @param UploadedFile $file
      * @param string $path|null
@@ -28,7 +28,22 @@ trait Uploadable
     }
 
     /**
-     * Undocumented function
+     * Check file in storage.
+     *
+     * @param string $filename
+     * @param string|null $path
+     * @param string|null $disk
+     * @return bool
+     */
+    public function existsFile($filename, $path = null, $disk = 'public')
+    {
+        $storage = Storage::disk($disk);
+        $filepath = ($path != null ? $path . '/' : null) . $filename;
+        return $storage->exists($filepath);
+    }
+
+    /**
+     * Delete file in storage.
      *
      * @param string $filename
      * @param string|null $path
@@ -43,11 +58,11 @@ trait Uploadable
         if ($storage->exists($filepath)) {
             return $storage->delete($filepath);
         }
-        return true;
+        return false;
     }
 
     /**
-     * Undocumented function
+     * Delete directory in storage.
      *
      * @param string $dir
      * @return bool
@@ -60,6 +75,6 @@ trait Uploadable
             return $storage->deleteDirectory($dir);
         }
 
-        return true;
+        return false;
     }
 }

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -114,6 +113,19 @@ class LoginController extends Controller
                 'content' => trans('auth.not_registered'),
             ]);
         }
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+        $request->session()->invalidate();
+        return $this->loggedOut($request) ?: redirect('/');
     }
 
     /**

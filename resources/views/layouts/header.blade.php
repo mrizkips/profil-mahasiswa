@@ -6,11 +6,11 @@
     <button class="c-header-toggler c-class-toggler ml-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true"><span class="c-header-toggler-icon"></span></button>
     <ul class="c-header-nav ml-auto mr-4">
         <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <div class="c-avatar"><img class="c-avatar-img" src="{{ url('/assets/img/icon-user.jpg') }}"></div></a>
+            <div class="c-avatar"><img class="c-avatar-img" src="{{ Auth::guard('admin')->check() ? asset('assets/img/icon-user.jpg') : asset('storage/'.auth('mahasiswa')->user()->profil_mhs->pas_foto) }}"></div></a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a class="dropdown-item" href="{{ Auth::guard('admin')->check() ? route('admin.logout') : route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="cil-account-logout mr-2"></i>Logout
-                    <form action="{{ route('admin.logout') }}" method="POST" id="logout-form"> @csrf
+                    <form action="{{ Auth::guard('admin')->check() ? route('admin.logout') : route('logout') }}" method="POST" id="logout-form"> @csrf
                     <button type="submit" class="btn btn-ghost-dark btn-block d-none">Logout</button></form>
                 </a>
             </div>

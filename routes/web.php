@@ -23,6 +23,12 @@ Auth::routes([
 
 Route::middleware('auth:mahasiswa')->group(function() {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/mahasiswa', 'HomeController@mahasiswa')->name('mahasiswa');
+    Route::get('/ganti_password', 'HomeController@ganti_password')->name('ganti_password');
+    Route::post('/ganti_password', 'HomeController@password_update')->name('ganti_password.update');
+    Route::resource('semester', 'SemesterController');
+    Route::resource('krs', 'KrsController')->parameters(['krs' => 'krs'])->except(['show']);
+    Route::get('krs/{krs}/view_upload', 'KrsController@view_upload')->name('krs.view_upload');
 });
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], function () {
