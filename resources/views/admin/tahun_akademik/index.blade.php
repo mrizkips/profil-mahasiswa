@@ -37,6 +37,13 @@
                                             <td>{{ $tahun_akademik->firstItem() + $key }}</td>
                                             <td>{{ $data->nama }}</td>
                                             <td>
+                                                @if ($data->aktif != 1)
+                                                <form class="d-inline" action="{{ route('admin.tahun_akademik.aktif', $data->id) }}" method="post" onsubmit="return confirm('Apakah Anda yakin akan melakukan aksi ini?');">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="btn btn-outline-info btn-sm" title="Aktifkan"><i class="cil-check"></i></button>
+                                                </form>
+                                                @endif
                                                 @include('components.edit', ['url' => route('admin.tahun_akademik.edit', $data->id)])
                                                 @include('components.delete', ['url' => route('admin.tahun_akademik.destroy', $data->id)])
                                             </td>

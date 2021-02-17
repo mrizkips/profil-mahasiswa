@@ -57,6 +57,11 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col d-lg-none">
+                                        @if (Route::has('register'))
+                                        <a href="{{ route('register') }}" class="btn btn-link px-0">Registrasi</a>
+                                        @endif
+                                    </div>
                                     <div class="col">
                                         <div class="form-group float-right">
                                             <div class="form-check">

@@ -6,10 +6,6 @@
     <li class="breadcrumb-item active">Ganti Password</li>
 @endsection
 
-@php
-    $profil_mhs = $mahasiswa->profil_mhs ?: null;
-@endphp
-
 @section('content')
     <div class="container-fluid">
         <div class="fade-in">
@@ -20,8 +16,9 @@
                 <div class="col-md-10">
                     <div class="card card-accent-primary">
                         <div class="card-header"><strong class="text-primary">Ganti Password Form</strong></div>
-                        <form action="{{ route('ganti_password.update') }}" method="post" class="form-horizontal">
+                        <form action="{{ isset($admin) ? route('admin.ganti_password.update') : route('ganti_password.update') }}" method="post" class="form-horizontal">
                         @csrf
+                        @method('PUT')
                         <div class="card-body">
                             <div class="form-group row">
                                 <label for="old_password" class="col-sm col-form-label">Password Lama</label>

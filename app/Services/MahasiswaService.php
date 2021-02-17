@@ -33,14 +33,12 @@ class MahasiswaService
         try {
             $mahasiswa->fill($fields);
             throw_unless($mahasiswa->update(), new Exception());
-
             $mahasiswa->profil_mhs()->update($profile_fields);
             $updated = $mahasiswa->fresh();
             DB::commit();
         } catch (Exception $e) {
             $updated = false;
             DB::rollBack();
-            dd($e);
         }
 
         return $updated;

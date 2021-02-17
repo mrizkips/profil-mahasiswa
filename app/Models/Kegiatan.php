@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Krs extends Model
+class Kegiatan extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'krs';
+    protected $table = 'kegiatan';
 
     /**
      * The attributes that are mass assignable.
@@ -19,13 +19,8 @@ class Krs extends Model
      * @var array
      */
     protected $fillable = [
-        'semester_id', 'jumlah', 'catatan', 'file_upload',
+        'semester_id', 'nama', 'penyelenggara', 'tingkat', 'file_upload',
     ];
-
-    public function semester()
-    {
-        return $this->belongsTo(Semester::class, 'semester_id', 'id');
-    }
 
     /**
      * Membatasi query semester dengan id mahasiswa.
@@ -36,6 +31,11 @@ class Krs extends Model
      */
     public function scopeOfMahasiswaId($query, $mahasiswa_id)
     {
-        return $query->join('semester', 'semester.id', '=', 'krs.semester_id')->where('mahasiswa_id', $mahasiswa_id);
+        return $query->join('semester', 'semester.id', '=', 'kegiatan.semester_id')->where('mahasiswa_id', $mahasiswa_id);
+    }
+
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class, 'semester_id', 'id');
     }
 }

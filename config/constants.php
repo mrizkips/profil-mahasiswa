@@ -17,6 +17,10 @@ return [
         'true' => '1',
         'false' => '0',
     ],
+    'tahun_akademik' => [
+        'aktif' => '1',
+        'nonaktif' => '0',
+    ],
     'forms' => [
         'jen_kel' => [
             'l' => 'Laki-laki',
@@ -30,6 +34,12 @@ return [
         ],
         'semester' => [
             'Genap', 'Ganjil', 'Antara',
+        ],
+        'jabatan' => [
+            'Anggota', 'Sekretaris', 'Ketua', 'Wakil Ketua',
+        ],
+        'tingkat' => [
+            'Lokal', 'Nasional', 'Internasional',
         ],
     ],
 ];

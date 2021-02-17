@@ -22,6 +22,18 @@ class Semester extends Model
         'tipe', 'mahasiswa_id', 'tahun_akademik_id',
     ];
 
+    /**
+     * Membatasi query semester dengan id mahasiswa.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  mixed  $id
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfMahasiswaId($query, $mahasiswa_id)
+    {
+        return $query->where('mahasiswa_id', $mahasiswa_id);
+    }
+
     public function tahun_akademik()
     {
         return $this->belongsTo(TahunAkademik::class, 'tahun_akademik_id', 'id');
@@ -35,5 +47,20 @@ class Semester extends Model
     public function krs()
     {
         return $this->hasOne(Krs::class);
+    }
+
+    public function ekstrakurikuler_mhs()
+    {
+        return $this->hasMany(EkstrakurikulerMhs::class);
+    }
+
+    public function sertifikasi()
+    {
+        return $this->hasMany(Sertifikasi::class);
+    }
+
+    public function kegiatan()
+    {
+        return $this->hasMany(Kegiatan::class);
     }
 }

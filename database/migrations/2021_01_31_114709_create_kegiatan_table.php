@@ -19,7 +19,7 @@ class CreateKegiatanTable extends Migration
             $table->unsignedBigInteger('semester_id');
             $table->string('nama', 50);
             $table->string('penyelenggara', 50);
-            $table->enum('tingat', ['Lokal', 'Nasional', 'Internasional']);
+            $table->enum('tingkat', ['Lokal', 'Nasional', 'Internasional']);
             $table->string('file_upload', 100)->nullable();
             $table->timestamps();
 

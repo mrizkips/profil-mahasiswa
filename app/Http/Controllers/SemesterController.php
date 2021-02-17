@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SemesterRequest;
 use App\Models\Semester;
 use App\Models\TahunAkademik;
+use App\Services\SemesterService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -130,7 +131,7 @@ class SemesterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(SemesterService $service, $id)
     {
         if (!$semester = Semester::find($id)) {
             return redirect()->back()->with('alert', [
@@ -139,7 +140,7 @@ class SemesterController extends Controller
             ]);
         }
 
-        if($semester->delete()) {
+        if($service->delete($semester)) {
             return redirect()->back()->with('alert', [
                 'color' => 'success',
                 'content' => trans('semester.messages.success.delete'),

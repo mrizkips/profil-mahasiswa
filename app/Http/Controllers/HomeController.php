@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GantiPasswordRequest;
+use App\Models\EkstrakurikulerMhs;
+use App\Models\Kegiatan;
+use App\Models\Krs;
 use App\Models\Mahasiswa;
+use App\Models\Semester;
+use App\Models\Sertifikasi;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
@@ -15,7 +20,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = auth('mahasiswa')->user();
+        $semester = Semester::ofMahasiswaId($user->id);
+        $krs = Krs::ofMahasiswaId($user->id);
+        $ekstrakurikuler = EkstrakurikulerMhs::ofMahasiswaId($user->id);
+        $sertifikasi = Sertifikasi::ofMahasiswaId($user->id);
+        $kegiatan = Kegiatan::ofMahasiswaId($user->id);
+        return view('home', compact(
+            'user', 'semester', 'krs', 'ekstrakurikuler', 'sertifikasi', 'kegiatan'
+        ));
     }
 
     /**
@@ -43,7 +56,7 @@ class HomeController extends Controller
     /**
      * Show profil mahasiswa.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\GantiPasswordRequest $request
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function password_update(GantiPasswordRequest $request)

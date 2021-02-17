@@ -9,6 +9,8 @@ use App\Models\AsalPemasaran;
 use App\Models\Jurusan;
 use App\Models\Mahasiswa;
 use App\Models\Pekerjaan;
+use App\Models\Semester;
+use App\Models\TahunAkademik;
 use App\Services\MahasiswaService;
 use App\Traits\Uploadable;
 use Yajra\DataTables\Facades\DataTables;
@@ -98,12 +100,13 @@ class MahasiswaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Mahasiswa $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Mahasiswa $mahasiswa)
     {
-        //
+        $semester = Semester::where('mahasiswa_id', $mahasiswa->id)->get();
+        return view('admin.mahasiswa.show', compact('mahasiswa', 'semester'));
     }
 
     /**
@@ -196,5 +199,17 @@ class MahasiswaController extends Controller
             'color' => 'danger',
             'content' => trans('mahasiswa.messages.errors.delete'),
         ]);
+    }
+
+    /**
+     * Menampilkan semester
+     *
+     * @param \App\Models\Mahasiswa $mahasiswa
+     * @param \App\Models\Semester $semester
+     * @return \Illuminate\Http\Response
+     */
+    public function semester(Mahasiswa $mahasiswa, Semester $semester)
+    {
+        return view('admin.semester.show', compact('mahasiswa', 'semester'));
     }
 }

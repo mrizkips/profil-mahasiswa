@@ -84,6 +84,35 @@
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header"><strong>Semester</strong></div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <td>Tahun Akademik</td>
+                                    <td>Tipe</td>
+                                    <td>Tanggal Dibuat</td>
+                                    <td>Aksi</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($semester as $item)
+                                    <tr>
+                                        <td>{{ $item->tahun_akademik->nama }}</td>
+                                        <td>{{ $item->tipe }}</td>
+                                        <td>{{ $item->created_at }}</td>
+                                        <td>
+                                            @include('components.show', ['url' => route('admin.mahasiswa.semester', ['mahasiswa' => $item->mahasiswa_id, 'semester' => $item->id])])
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

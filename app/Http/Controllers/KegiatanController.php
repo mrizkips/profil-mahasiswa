@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\KrsRequest;
-use App\Models\Krs;
+use App\Http\Requests\KegiatanRequest;
+use App\Models\Kegiatan;
 use App\Models\Semester;
 use App\Traits\Uploadable;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class KrsController extends Controller
+class KegiatanController extends Controller
 {
     use Uploadable;
 
@@ -18,32 +18,33 @@ class KrsController extends Controller
      *
      * @var string
      */
-    protected $upload_path = 'krs/';
+    protected $upload_path = 'kegiatan/';
 
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $krs = Krs::query()->with(['semester', 'semester.tahun_akademik']);
-            return DataTables::eloquent($krs)
+            $kegiatan = Kegiatan::query()->with(['semester', 'semester.tahun_akademik']);
+            return DataTables::eloquent($kegiatan)
                 ->addIndexColumn()
                 ->addColumn('view_upload', function($row) {
-                    return '<a href="'.route("krs.view_upload", $row->id).'" class="btn btn-link">Lihat file</a>';
+                    return '<a href="'.route("kegiatan.view_upload", $row->id).'" class="btn btn-link">Lihat file</a>';
                 })
                 ->addColumn('action', function($row) {
-                    $edit = view('components.edit', ['url' => route('krs.edit', $row->id)]);
-                    $delete = view('components.delete', ['url' => route('krs.destroy', $row->id)]);
+                    $edit = view('components.edit', ['url' => route('kegiatan.edit', $row->id)]);
+                    $delete = view('components.delete', ['url' => route('kegiatan.destroy', $row->id)]);
                     return $edit.$delete;
                 })
                 ->rawColumns(['view_upload', 'action'])
                 ->make();
         }
 
-        return view('krs.index');
+        return view('kegiatan.index');
     }
 
     /**
@@ -55,36 +56,29 @@ class KrsController extends Controller
     public function create(Request $request)
     {
         $semester = Semester::where('mahasiswa_id', auth('mahasiswa')->id())->get();
-        return view('krs.form', compact('request', 'semester'));
+        return view('kegiatan.form', compact('request', 'semester'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\KrsRequest  $request
+     * @param  \App\Http\Requests\KegiatanRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(KrsRequest $request)
+    public function store(KegiatanRequest $request)
     {
         $fields = $request->getFields();
         $username = auth('mahasiswa')->user()->username;
-
-        if ($check = Krs::where('semester_id', $request->input('semester_id'))->exists()) {
-            return redirect()->back()->withInput()->with('alert', [
-                'color' => 'danger',
-                'content' => trans('krs.messages.errors.exists'),
-            ]);
-        }
 
         if ($request->hasFile('file_upload')) {
             $filename = $this->uploadFile($request->file('file_upload'), null, $this->upload_path.$username);
             $fields['file_upload'] = $filename;
         }
 
-        if (Krs::create($fields)) {
-            return redirect()->route('krs.index')->with('alert', [
+        if (Kegiatan::create($fields)) {
+            return redirect()->route('kegiatan.index')->with('alert', [
                 'color' => 'success',
-                'content' => trans('krs.messages.success.create'),
+                'content' => trans('kegiatan.messages.success.create'),
             ]);
         }
 
@@ -94,41 +88,41 @@ class KrsController extends Controller
 
         return redirect()->back()->withInput()->with('alert', [
             'color' => 'danger',
-            'content' => trans('krs.messages.errors.create'),
+            'content' => trans('kegiatan.messages.errors.create'),
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Krs  $krs
+     * @param  \App\Models\Kegiatan  $kegiatan
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function edit(Krs $krs, Request $request)
+    public function edit(Kegiatan $kegiatan, Request $request)
     {
         $semester = Semester::where('mahasiswa_id', auth('mahasiswa')->id())->get();
-        return view('krs.form', compact('request', 'semester', 'krs'));
+        return view('kegiatan.form', compact('request', 'semester', 'kegiatan'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\KrsRequest  $request
+     * @param  \App\Http\Requests\KegiatanRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(KrsRequest $request, $id)
+    public function update(KegiatanRequest $request, $id)
     {
-        if (!$krs = Krs::find($id)) {
+        if (!$kegiatan = Kegiatan::find($id)) {
             return redirect()->back()->with('alert', [
                 'color' => 'danger',
-                'content' => trans('krs.messages.errors.not_found'),
+                'content' => trans('kegiatan.messages.errors.not_found'),
             ]);
         }
 
         $username = auth('mahasiswa')->user()->username;
-        $old_image = $krs->file_upload;
+        $old_image = $kegiatan->file_upload;
         $fields = $request->getFields();
 
         if ($request->hasFile('file_upload')) {
@@ -136,14 +130,14 @@ class KrsController extends Controller
             $fields['file_upload'] = $filename;
         }
 
-        if ($krs->update($fields)) {
+        if ($kegiatan->update($fields)) {
             if ($request->hasFile('file_upload')) {
                 $this->deleteFile($old_image);
             }
 
-            return redirect()->route('krs.index')->with('alert', [
+            return redirect()->route('kegiatan.index')->with('alert', [
                 'color' => 'success',
-                'content' => trans('krs.messages.success.update'),
+                'content' => trans('kegiatan.messages.success.update'),
             ]);
         }
 
@@ -153,7 +147,7 @@ class KrsController extends Controller
 
         return redirect()->back()->withInput()->with('alert', [
             'color' => 'danger',
-            'content' => trans('krs.messages.errors.update'),
+            'content' => trans('kegiatan.messages.errors.update'),
         ]);
     }
 
@@ -165,42 +159,42 @@ class KrsController extends Controller
      */
     public function destroy($id)
     {
-        if (!$krs = Krs::find($id)) {
+        if (!$kegiatan = Kegiatan::find($id)) {
             return redirect()->back()->with('alert', [
                 'color' => 'danger',
-                'content' => trans('krs.messages.errors.not_found'),
+                'content' => trans('kegiatan.messages.errors.not_found'),
             ]);
         }
-        $file = $krs->file_upload;
-        if($krs->delete()) {
+        $file = $kegiatan->file_upload;
+        if($kegiatan->delete()) {
             $this->deleteFile($file);
             return redirect()->back()->with('alert', [
                 'color' => 'success',
-                'content' => trans('krs.messages.success.delete'),
+                'content' => trans('kegiatan.messages.success.delete'),
             ]);
         }
 
         return redirect()->back()->with('alert', [
             'color' => 'danger',
-            'content' => trans('krs.messages.errors.delete'),
+            'content' => trans('kegiatan.messages.errors.delete'),
         ]);
     }
 
     /**
      * Show uploaded file from storage.
      *
-     * @param \App\Models\Krs $krs
+     * @param \App\Models\Kegiatan $kegiatan
      * @return \Illuminate\Http\Response
      */
-    public function view_upload(Krs $krs)
+    public function view_upload(Kegiatan $kegiatan)
     {
-        if ($this->existsFile($krs->file_upload)) {
-            return response()->file('storage/'.$krs->file_upload);
+        if ($this->existsFile($kegiatan->file_upload)) {
+            return response()->file('storage/'.$kegiatan->file_upload);
         }
 
         return redirect()->back()->with('alert', [
             'color' => 'danger',
-            'content' => trans('krs.messages.errors.not_found'),
+            'content' => trans('kegiatan.messages.errors.not_found'),
         ]);
     }
 }

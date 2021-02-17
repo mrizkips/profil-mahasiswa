@@ -37,11 +37,6 @@
                 <div class="card card-accent-primary">
                     <div class="card-header">
                         <strong class="text-primary">KRS</strong>
-                        @empty($semester->krs)
-                        <a href="{{ route('krs.create', ['semester_id' => $semester->id]) }}" class="btn btn-primary float-right">
-                            <i class="cil-plus"></i> Tambah KRS
-                        </a>
-                        @endempty
                     </div>
                     <div class="card-body">
                         @if($krs = $semester->krs)
@@ -52,7 +47,6 @@
                                     <td>Catatan</td>
                                     <td>Bukti KRS</td>
                                     <td>Tanggal Dibuat</td>
-                                    <td>Aksi</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,10 +61,6 @@
                                         @endisset
                                     </td>
                                     <td>{{ $krs->created_at }}</td>
-                                    <td>
-                                        @include('components.edit', ['url' => route('krs.edit', $krs->id)])
-                                        @include('components.delete', ['url' => route('krs.destroy', $krs->id)])
-                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -82,9 +72,6 @@
                 <div class="card card-accent-primary">
                     <div class="card-header">
                         <strong class="text-primary">Ekstrakurikuler</strong>
-                        <a href="{{ route('ekstrakurikuler_mhs.create', ['semester_id' => $semester->id]) }}" class="btn btn-primary float-right">
-                            <i class="cil-plus"></i> Tambah Ekstrakurikuler
-                        </a>
                     </div>
                     <div class="card-body">
                         @php $ekstrakurikuler_mhs = $semester->ekstrakurikuler_mhs  @endphp
@@ -95,7 +82,6 @@
                                     <td>Nama Ekstrakurikuler</td>
                                     <td>Jabatan</td>
                                     <td>Tanggal Dibuat</td>
-                                    <td>Aksi</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -104,10 +90,6 @@
                                     <td>{{ $item->ekstrakurikuler->nama }}</td>
                                     <td>{{ $item->jabatan }}</td>
                                     <td>{{ $item->created_at }}</td>
-                                    <td>
-                                        @include('components.edit', ['url' => route('ekstrakurikuler_mhs.edit', $item->id)])
-                                        @include('components.delete', ['url' => route('ekstrakurikuler_mhs.destroy', $item->id)])
-                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -120,9 +102,6 @@
                 <div class="card card-accent-primary">
                     <div class="card-header">
                         <strong class="text-primary">Sertifikasi</strong>
-                        <a href="{{ route('sertifikasi.create', ['semester_id' => $semester->id]) }}" class="btn btn-primary float-right">
-                            <i class="cil-plus"></i> Tambah Sertifikasi
-                        </a>
                     </div>
                     <div class="card-body">
                         @php $sertifikasi = $semester->sertifikasi  @endphp
@@ -136,7 +115,6 @@
                                     <td>Catatan</td>
                                     <td>Bukti Sertifikasi</td>
                                     <td>Tanggal Dibuat</td>
-                                    <td>Aksi</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -154,10 +132,6 @@
                                         @endisset
                                     </td>
                                     <td>{{ $item->created_at }}</td>
-                                    <td>
-                                        @include('components.edit', ['url' => route('sertifikasi.edit', $item->id)])
-                                        @include('components.delete', ['url' => route('sertifikasi.destroy', $item->id)])
-                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -185,7 +159,6 @@
                                     <td>Tingkat</td>
                                     <td>Bukti Kegiatan</td>
                                     <td>Tanggal Dibuat</td>
-                                    <td>Aksi</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -202,10 +175,6 @@
                                         @endisset
                                     </td>
                                     <td>{{ $item->created_at }}</td>
-                                    <td>
-                                        @include('components.edit', ['url' => route('kegiatan.edit', $item->id)])
-                                        @include('components.delete', ['url' => route('kegiatan.destroy', $item->id)])
-                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -213,6 +182,9 @@
                         @else
                         <strong>Data tidak ditemukan!</strong>
                         @endif
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ route('admin.mahasiswa.show', $mahasiswa->id) }}" class="btn btn-secondary"><i class="cil-arrow-thick-left"></i> Kembali</a>
                     </div>
                 </div>
             </div>

@@ -122,4 +122,34 @@ class TahunAkademikController extends Controller
             'content' => trans('tahun_akademik.messages.errors.delete'),
         ]);
     }
+
+    /**
+     * Ubah tahun akademik menjadi aktif.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function aktif($id)
+    {
+        if (!$tahun_akademik = TahunAkademik::find($id)) {
+            return redirect()->back()->with('alert', [
+                'color' => 'danger',
+                'content' => trans('tahun_akademik.messages.errors.not_found'),
+            ]);
+        }
+
+        if (TahunAkademik::query()->update(['aktif' => config('constants.tahun_akademik.nonaktif')])) {
+            if ($tahun_akademik->update(['aktif' => config('constants.tahun_akademik.aktif')])) {
+                return redirect()->back()->with('alert', [
+                    'color' => 'success',
+                    'content' => trans('tahun_akademik.messages.success.activated'),
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('alert', [
+            'color' => 'danger',
+            'content' => trans('tahun_akademik.messages.errors.activated'),
+        ]);
+    }
 }
