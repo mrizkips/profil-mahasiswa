@@ -74,4 +74,9 @@ class HomeController extends Controller
             'content' => trans('passwords.messages.errors.update'),
         ]);
     }
+
+    public function landing_page()
+    {
+        return view('landingpage');
+    }
 }

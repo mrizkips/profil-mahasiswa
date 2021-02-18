@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+Route::get('/', 'HomeController@landing_page')->name('landingpage');
 
 Auth::routes([
     'password.email' => false,

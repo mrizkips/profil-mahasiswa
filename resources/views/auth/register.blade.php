@@ -11,7 +11,7 @@
                         <div class="card-body">
                             @include('components.alert')
                             <div class="text-center">
-                                <img src="{{ asset('assets/img/stmik-logo.png') }}" alt="STMIK Logo" class="text-center img-fluid mb-4" width="200px">
+                                <a href="{{ route('landingpage') }}"><img src="{{ asset('assets/img/stmik-logo.png') }}" alt="STMIK Logo" class="text-center img-fluid mb-4" width="200px"></a>
                             </div>
                             <h1>Registrasi</h1>
                             <p class="text-muted">Halaman registrasi untuk mahasiswa</p>

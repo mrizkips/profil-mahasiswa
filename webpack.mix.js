@@ -16,6 +16,9 @@ mix.js('resources/js/app.js', 'public/js');
 // Styles
 mix.sass('resources/sass/styles.scss', 'public/css')
 
+// Vendor
+mix.copy('resources/vendor/mobirise', 'public/vendor');
+
 // JQuery
 mix.copy('node_modules/jquery/dist/jquery.min.js', 'public/js');
 
