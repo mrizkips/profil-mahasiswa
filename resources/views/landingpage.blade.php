@@ -142,6 +142,7 @@
 
 
     <div class="container">
+        <h3 class="mbr-section-title mbr-fonts-style align-center mb-4 display-2"><strong>Creator</strong></h3>
         <div class="card">
             <div class="card-wrapper">
                 <div class="row align-items-center">
